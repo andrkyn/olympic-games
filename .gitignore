@@ -1,0 +1,8 @@
+# webstorm project files
+.idea
+
+# node_modules directory ignore
+node_modules
+
+# csv ignore
+scv/*
