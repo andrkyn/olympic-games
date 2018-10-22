@@ -22,15 +22,15 @@ var db = new sqlite3.Database('olympic_history.db');
             json.forEach(function (items) {
 
                     //write json data tables athletes to an array
-                    var strName = items.Name;
-                    var intSex = items.Sex,
-                        intAge = items.Age,
-                        strParams,
-                        par1 = items.Height,
-                        par2 = items.Weight,
-                        comma,
-                        team_id = items.ID,
-                        intSex = intSex.replace(/M/i, "1");
+                var strName = items.Name;
+                var intSex = items.Sex,
+                    intAge = items.Age,
+                    strParams,
+                    par1 = items.Height,
+                    par2 = items.Weight,
+                    comma,
+                    team_id = items.ID,
+                    intSex = intSex.replace(/M/i, "1");
                     intSex = intSex.replace(/F/i, "0");
                     intAge = intAge.replace(/NA/g, "0");
                     strName = strName.replace(/"[^"]+"\s+/g, "");
@@ -54,6 +54,7 @@ var db = new sqlite3.Database('olympic_history.db');
                             par2 = '}';
                     }
                     strParams = par1 + comma + par2;
+                    console.log(strName+' ' + intSex + ' ' + intAge + ' ' + strParams);
 
                     //write json data tables "Teams"  to an array
                     var strTeam = items.Team;
@@ -82,6 +83,13 @@ var db = new sqlite3.Database('olympic_history.db');
                      */
 
                     db.serialize(function () {
+
+                           // to write data to table "Athletes"
+                            var athletes = db.prepare('INSERT OR REPLACE INTO athletes('
+                                + 'id, full_name, sex, age, params, team_id)'
+                                + 'VALUES (?,?,?,?,?,?)');
+                            athletes.run(colColumn, strName, intSex, intAge, strParams, team_id);
+                            athletes.finalize();
 
                     });
 
