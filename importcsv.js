@@ -7,7 +7,7 @@ var csvFilePath='./csv/athlete_basaSmall2.csv';
 csv()
     .fromFile(csvFilePath)
     .then((json)=>{
-        console.log(json);
+        //console.log(json);
 
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('olympic_history.db');
@@ -54,7 +54,8 @@ var db = new sqlite3.Database('olympic_history.db');
                             par2 = '}';
                     }
                     strParams = par1 + comma + par2;
-                    console.log(strName+' ' + intSex + ' ' + intAge + ' ' + strParams);
+
+                    //console.log(strName+' ' + intSex + ' ' + intAge + ' ' + strParams);
 
                     //write json data tables "Teams"  to an array
                     var strTeam = items.Team;
@@ -82,16 +83,27 @@ var db = new sqlite3.Database('olympic_history.db');
                      fnd+'|'+'| |colStr: '+colStr+'|');
                      */
 
-                    db.serialize(function () {
+                db.serialize(function () {
 
-                           // to write data to table "Athletes"
-                            var athletes = db.prepare('INSERT OR REPLACE INTO athletes('
-                                + 'id, full_name, sex, age, params, team_id)'
-                                + 'VALUES (?,?,?,?,?,?)');
-                            athletes.run(colColumn, strName, intSex, intAge, strParams, team_id);
-                            athletes.finalize();
+                    // to write data to table "Athletes"
+                    var athletes = db.prepare('INSERT OR REPLACE INTO athletes('
+                        + 'id, full_name, sex, age, params, team_id)'
+                        + 'VALUES (?,?,?,?,?,?)');
+                    athletes.run(colColumn, strName, intSex, intAge, strParams, team_id);
+                    athletes.finalize();
 
-                    });
+                    // to write data to table "Teams"
+                    if (colColumn == json.length) {
+                       var team = db.prepare('INSERT OR REPLACE INTO teams('
+                         + 'id, name, noc_name)'
+                         + 'VALUES (?,?,?)');
+                         for (var i = 0; i < colStr; i++) {
+                         team.run(i, arr2[i], arr[i]);
+                         }
+                         team.finalize();
+                    }
+
+                });
 
                     // reset array and object at end cycle
                     if (colColumn == json.length) {
@@ -102,6 +114,7 @@ var db = new sqlite3.Database('olympic_history.db');
 
 
             });
+            console.log(' number of lines: ' + colColumn + '\n number of NOC: ' +colStr);
             db.close();
     });
 
