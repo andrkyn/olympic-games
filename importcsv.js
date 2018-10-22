@@ -80,6 +80,15 @@ var db = new sqlite3.Database('olympic_history.db');
                      console.log(strNoc + ' ' + strTeam +'| |Lenght: ' + arr.length + '| |fnd: '+
                      fnd+'|'+'| |colStr: '+colStr+'|');
                      */
+
+                    // reset array and object at end cycle
+                    if (colColumn == json.length) {
+                            arr.splice(0, arr.length);
+                            arr.splice(0, arr2.length);
+                            arr.splice(0, json.length);
+                    }
+
+
             })
 
     });
