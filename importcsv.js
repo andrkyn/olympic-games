@@ -1,6 +1,7 @@
 var csv=require('csvtojson');
 
-var csvFilePath='./athlete_events.csv';
+//var csvFilePath='./csv/athlete_events.csv';
+var csvFilePath='./csv/athlete_basaSmall2.csv';
 
 //added json-object for loading csv-files into it
 csv()
@@ -8,6 +9,8 @@ csv()
     .then((json)=>{
         console.log(json);
 
+var sqlite3 = require("sqlite3").verbose();
+var db = new sqlite3.Database('olympic_history.db');
 
-    });
+});
 
