@@ -12,5 +12,10 @@ csv()
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('olympic_history.db');
 
+           // data array creation
+            json.forEach(function (items) {
+
+            })
+
 });
 
