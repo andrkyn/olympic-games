@@ -27,6 +27,8 @@ var db = new sqlite3.Database('olympic_history.db');
                 intSex = intSex.replace(/M/i, "1");
                 intSex = intSex.replace(/F/i, "0");
                 intAge = intAge.replace(/NA/g, "0");
+                strName = strName.replace(/"[^"]+"\s+/g, "");
+                strName = strName.replace(/\s+\(([^\)|\(]*?)\)/g, "");
 
                     if (par1 !== 'NA' && par2 !== 'NA') {
                             comma = ','
