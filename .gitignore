@@ -7,7 +7,3 @@ node_modules
 # csv ignore
 scv/*
 db/*
-
-#file ignore
-server.js
-csv2json.js
