@@ -81,6 +81,10 @@ var db = new sqlite3.Database('olympic_history.db');
                      fnd+'|'+'| |colStr: '+colStr+'|');
                      */
 
+                    db.serialize(function () {
+
+                    });
+
                     // reset array and object at end cycle
                     if (colColumn == json.length) {
                             arr.splice(0, arr.length);
@@ -89,7 +93,7 @@ var db = new sqlite3.Database('olympic_history.db');
                     }
 
 
-            })
-
+            });
+            db.close();
     });
 
