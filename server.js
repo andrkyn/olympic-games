@@ -1,5 +1,5 @@
 var sqlite3 = require('sqlite3').verbose();
-
+var app = angular.module()
 var db = new sqlite3.Database('./olympic_history.db');
 
 var check;

@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/andrkyn/olympic-games#readme",
   "dependencies": {
+    "csvjson": "^5.1.0",
     "csvtojson": "^2.0.8",
+    "express": "^4.16.3",
     "sqlite3": "^4.0.2"
   }
 }
