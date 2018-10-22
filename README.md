@@ -11,17 +11,15 @@ cd olympic-games
 npm install
 ```
 
-## Steps.  For start server.js
+## Steps 1.  Start importcsv.js
 
 To start the express server, run the following
 
 ```bash
-npm start
+nodemon importcsv.js
 ```
 
-Test CSV output to json in console
+After launching the import script in the base olympic_history.db two tables
+thletes and Teams will be created
 
-## Steps.
-```bash
-node csv2json.js
-```
+
