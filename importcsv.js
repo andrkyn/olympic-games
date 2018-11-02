@@ -172,10 +172,10 @@ var mode = process.argv[2];
                         for (var i = 0; i < arrRez.length; i++) {
                             games.run(i, arrYear[i], arrSeason[i], arrCity[i]);
                             events.run(i, arrEvent[i]);
-                            console.log('Add to events & games table: ' + i);
                         }
                         games.finalize();
                         events.finalize();
+                        console.log('Add to events & games table: ' + arrRez.length);
 
                         // to write data to table "Sports"
                         var sports = db.prepare('INSERT OR REPLACE INTO sports('
@@ -183,9 +183,9 @@ var mode = process.argv[2];
                             + 'VALUES (?,?)');
                         for (var j = 0; j < colSport; j++) {
                             sports.run(j, arrSport[j]);
-                            console.log('Add to sport table: ' + j);
                         }
                         sports.finalize();
+                        console.log('Add to teams table: ' + colSport );
 
                         // to write data to table "Teams"
                         var team = db.prepare('INSERT OR REPLACE INTO teams('
@@ -193,10 +193,9 @@ var mode = process.argv[2];
                             + 'VALUES (?,?,?)');
                         for (var i = 0; i < colStr; i++) {
                             team.run(i, arr2[i], arr[i]);
-                            console.log('Add to teams table: ' + i);
                         }
                         team.finalize();
-
+                        console.log('Add to teams table: ' + colStr );
                     }
 
                     // to write data to table "Results"
@@ -220,7 +219,7 @@ var mode = process.argv[2];
             });
 
           console.log(' number of lines: ' + colColumn + '\n number of NOC: ' +
-              colStr + '\n array Games: ' + arrGames + '\n Line Game: ' + lineGame +
+              colStr + '\n array Games: ' + arrGames + '\n number of Game: ' + lineGame +
               '\n arrRez: ' + arrRez+'\n mode: ' + mode);
 
         db.close();
