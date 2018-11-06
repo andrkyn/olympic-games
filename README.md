@@ -24,7 +24,7 @@ nodemon stat.js
 ```
 ## Parameters can be as follows:
 
-fin winter
+```fin winter
 winter 2000 gold
 silver summer
 ...
