@@ -11,15 +11,24 @@ cd olympic-games
 npm install
 ```
 
-## Steps 1.  Start importcsv.js
+## Start importcsv.js
 
 To start the express server, run the following
 
-```bash
+```bash - import athlete_events.csv to olympic_history.db
 nodemon importcsv.js
 ```
 
-After launching the import script in the base olympic_history.db two tables
-thletes and Teams will be created
+```bash - creating a histogram with parameters
+nodemon stat.js
+```
+```Parameters can be as follows:
+
+fin winter
+winter 2000 gold
+silver summer
+...
+...
+```
 
 
