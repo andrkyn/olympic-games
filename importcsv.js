@@ -1,8 +1,8 @@
 var csv=require('csvtojson');
 
-//var csvFilePath='./csv/athlete_events.csv';
+var csvFilePath='./csv/athlete_events.csv';
 //var csvFilePath='./csv/athlete_basaLarge.csv';
-var csvFilePath='./csv/athlete_basaSmall4.csv';
+//var csvFilePath='./csv/athlete_basaSmall4.csv';
 
 //added json-object for loading csv-files into it
 csv()
@@ -12,7 +12,6 @@ csv()
 
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('olympic_history.db');
-var mode = process.argv[2];
 
         //create variable and array before json frEach
         var arr = [], arr2 = [];
@@ -79,12 +78,7 @@ var mode = process.argv[2];
                     strNoc2 = strNoc;
                     colColumn++;
 
-                    /* //for testing
-                     console.log(strNoc + ' ' + strTeam +'| |Lenght: ' + arr.length + '| |fnd: '+
-                     fnd+'|'+'| |colStr: '+colStr+'|');
-                     */
-
-                ////////// add into Game data base  ////////
+                 ////////// add into Game data base  ////////
                 var strGames = items.Games;
                 var strCity = items.City;
                 var year = items.Year;
@@ -97,7 +91,6 @@ var mode = process.argv[2];
                 var posCity = arrCity.indexOf(strCity) == -1;
                 var posSport = arrSport.indexOf(sport) == -1;
                 var delUndef;
-
 
                 season = season.replace(/Winter/g, "1");
                 season = season.replace(/Summer/g, "0");
@@ -202,7 +195,7 @@ var mode = process.argv[2];
                     var results = db.prepare('INSERT OR REPLACE INTO results('
                         + 'id, athlete_id, game_id, sport_id, event_id, medal)'
                         + 'VALUES (?,?,?,?,?,?)');
-                    results.run(colColumn, athlete_id, fndGame, fndSport, 'null', medal); // поставил null в событиях, если будет необходимость, то выведу в базу
+                    results.run(colColumn, athlete_id, fndGame, fndSport, 'null', medal);
                     results.finalize();
 
                     db.run("commit");
@@ -220,7 +213,7 @@ var mode = process.argv[2];
 
           console.log(' number of lines: ' + colColumn + '\n number of NOC: ' +
               colStr + '\n array Games: ' + arrGames + '\n number of Game: ' + lineGame +
-              '\n arrRez: ' + arrRez+'\n mode: ' + mode);
+              '\n arrRez: ' + arrRez);
 
         db.close();
     });
