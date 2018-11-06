@@ -17,16 +17,14 @@ npm install
 nodemon importcsv.js
 ```
 
-## Start stat.js
+## Start stat.js with parameters
 
-```bash - creating a histogram with parameters
-nodemon stat.js
-```
 ## Parameters can be as follows:
 
-```fin winter
-winter 2000 gold
-silver summer
+```
+node stat fin winter
+node stat winter 2000 gold
+node stat silver summer
 ...
 ...
 ```

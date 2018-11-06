@@ -31,7 +31,7 @@ for (var i = 0; i < process.argv.length; i++) {
         param[i] = param[i].replace(/summer/g, "0");
         param[i] = param[i].replace(/winter/g, "1");
         query = query + 'and season=?';
-        alg = 2;
+        //alg = 2;
     }
 
     if ((param[i] == 'gold' || param[i] == 'silver' || param[i] == 'bronze') && (!param[i].match(/^\d+/))) {
@@ -39,7 +39,7 @@ for (var i = 0; i < process.argv.length; i++) {
         param[i] = param[i].replace(/silver/g, "2");
         param[i] = param[i].replace(/bronze/g, "3");
         query = query + 'and medal=?';
-        alg = 2;
+        //alg = 2;
     } else {
         console.error('Not parametr');
     }
