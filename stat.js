@@ -172,5 +172,7 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
             }
             return arr;
         }
+
+        var three = threeArray(arrParam.length, 4);
     }
 });
