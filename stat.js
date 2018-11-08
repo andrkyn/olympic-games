@@ -174,5 +174,28 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
         }
 
         var three = threeArray(arrParam.length, 4);
+
+        function sSort(i, ii) { // sort function
+            switch (alg) {
+                case 1:
+                    if (i[1] > ii[1])
+                        return 1;
+                    else if (i[1] < ii[1])
+                        return -1;
+                    else
+                        return 0;
+                    break;
+                case 2:
+                    if (i[2] < ii[2])
+                        return 1;
+                    else if (i[2] > ii[2])
+                        return -1;
+                    else
+                        return 0;
+                    break;
+            }
+        }
+
+        three.sort(sSort);
     }
 });
