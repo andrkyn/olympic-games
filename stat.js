@@ -197,5 +197,13 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
         }
 
         three.sort(sSort);
+
+        for (var i = 0; i <= arrParam.length - 1; i++) {
+            arrSeason[i] = three[i][0];
+            arrParam[i] = three[i][1];
+            numMedal[i] = three[i][2];
+
+            console.log(' ' + arrSeason[i] + '    ' + arrParam[i] + '  ' + numMedal[i]);
+        }
     }
 });
