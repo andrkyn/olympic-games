@@ -103,8 +103,12 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
     arr[2] = c;
     arr[3] = d;
 
-    if (alg == 1) { var strParam = arr[2]; }
-    if (alg == 2) { var strParam = arr[1]; }
+    if (alg == 1) {
+        var strParam = arr[2];
+    }
+    if (alg == 2) {
+        var strParam = arr[1];
+    }
 
     var strSeason = arr[3];
     var kolMedal = arr[0];
@@ -153,7 +157,20 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
             }
             numMedal[i] = progress;
             progress = '';
-            console.log(' ' + arrSeason[i] + '    ' + arrParam[i] + '  ' + numMedal[i]);
+            //console.log(' ' + arrSeason[i] + '    ' + arrParam[i] + '  ' + numMedal[i]);
+        }
+
+        function threeArray(rows, columns) { // a new array fill
+            var arr = new Array();
+            for (var i = 0; i < rows; i++) {
+                arr[i] = new Array();
+                for (var j = 0; j < columns; j++) {
+                    arr[i][0] = arrSeason[i];
+                    arr[i][1] = arrParam[i];
+                    arr[i][2] = numMedal[i];
+                }
+            }
+            return arr;
         }
     }
 });
