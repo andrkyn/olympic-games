@@ -138,7 +138,9 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
     if (endCycle == 1) {
 
         var progress = '';
-        var str;
+        var elMax;
+        var kolMed = 0;
+        var maxProgress = 200;
 
         if (alg == 1) {
             console.log('------------ Medal--------------');
@@ -149,15 +151,40 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
             console.log('>Season<  >Comand<');
         }
 
+        elMax = numMedal[0];
         for (var i = 0; i <= arrParam.length - 1; i++) {
             if (numMedal[i] > 0) {
-                for (var j = 0; j < numMedal[i]; j++) {
+                for (var j = 0; j < numMedal[i] * maxProgress / elMax; j++) {
                     progress = progress + '█';
+                    kolMed = numMedal[i] * maxProgress / elMax;
                 }
             }
-            numMedal[i] = progress;
+
+            if (elMax < numMedal[i]) {
+                elMax = numMedal[i];
+            }
+
+            //numMedal[i] = Math.round(kolMed);
+            numMedal[i] = (progress);
             progress = '';
+
+            kolMed = 0;
+
+            //console.log(elMax);
             //console.log(' ' + arrSeason[i] + '    ' + arrParam[i] + '  ' + numMedal[i]);
+
+            // для средней суммы всех команд, если больше, чем 200 медалей - пока закоментировал, раскоментировать позже
+            /*for (var l = 0; l <= numMedal.length; l++) {
+                if (numMedal[l] < 200) {
+                    var id_val = numMedal[l];
+                }
+                var position = numMedal.indexOf(id_val);
+                if (~position) {
+                    numMedal.splice(position, 1);
+                    arrParam.splice(position, 1);
+                    arrSeason.splice(position, 1);
+                }
+            }*/
         }
 
         function threeArray(rows, columns) { // a new array fill
