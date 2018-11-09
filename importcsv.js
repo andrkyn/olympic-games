@@ -1,7 +1,7 @@
 var csv=require('csvtojson');
 
-var csvFilePath='./csv/athlete_events.csv';
-//var csvFilePath='./csv/athlete_basaLarge.csv';
+//var csvFilePath='./csv/athlete_events.csv';
+var csvFilePath='./csv/athlete_basaLarge.csv';
 //var csvFilePath='./csv/athlete_basaSmall4.csv';
 
 //added json-object for loading csv-files into it
