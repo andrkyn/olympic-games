@@ -17,6 +17,8 @@ var strParam2;
 var fndParam = 0;
 var endCycle = 0;
 var alg = 0;
+var seson2=0;
+var val1, val2, val3, val4;
 
 for (var j = 0; j < process.argv.length; j++) {
     if (param[j] == 3 && isNaN(param[j])) {
@@ -71,7 +73,7 @@ function test(arg1, arg2, arg3, callback) {
                     rows.forEach(function (row) {
                         //console.log(row.game_id);
                         numCol++;
-                        var val1, val2, val3, val4;
+                        //var val1, val2, val3, val4;
                         val1 = row.medal;
                         val2 = row.noc_name;
                         val3 = row.year;
@@ -88,6 +90,16 @@ function test(arg1, arg2, arg3, callback) {
                         }
                         callback(val1, val2, val3, val4);
                     });
+                } else {
+                    for (var i = 0; i < process.argv.length - 1; i++) {
+                        //console.log(i);
+                        if (param[i] == 'Winter' || param[i] == 'Summer') {
+                            param[i] = val4;
+                        }
+                    }
+                    console.log('\x1b[35m', 'error: ' + '\x1b[37m' + 'there is no request' +
+                        '\x1b[33m', param + '\x1b[37m', 'in table');
+
                 }
             });
         db.close();
@@ -139,7 +151,7 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
         var progress = '';
         var elMax;
         var scaleMedals = 0;
-        var maxScale = 200;
+        var maxScale = 20;
 
         if (alg == 1) {
             console.log('------------ Medal--------------');
