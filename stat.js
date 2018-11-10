@@ -139,7 +139,7 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
         var progress = '';
         var elMax;
         var scaleMedals = 0;
-        var maxProgress = 200;
+        var maxScale = 200;
 
         if (alg == 1) {
             console.log('------------ Medal--------------');
@@ -159,12 +159,12 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
 
         for (var i = 0; i <= arrParam.length - 1; i++) {
             if (numMedal[i] > 0) {
-                for (var j = 0; j < numMedal[i]* maxProgress /elMax; j++) {
+                for (var j = 0; j < numMedal[i]* maxScale /elMax; j++) {
                      progress = progress + '█';
                 }
 
             }
-            scaleMedals = numMedal[i]* maxProgress /elMax;
+            scaleMedals = numMedal[i]* maxScale /elMax;
             scaleMedals =  Math.round(scaleMedals);
             numMedal[i] = (progress)+'|'+scaleMedals;
             scaleMedals = 0;
@@ -176,7 +176,7 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
 
             // для средней суммы всех команд, если больше, чем 200 медалей - пока закоментировал, раскоментировать позже
             /*for (var l = 0; l <= numMedal.length; l++) {
-                if (numMedal[l] < maxProgress) {
+                if (numMedal[l] < maxScale) {
                     var id_val = numMedal[l];
                 }
                 var position = numMedal.indexOf(id_val);
