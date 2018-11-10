@@ -28,7 +28,6 @@ for (var j = 0; j < process.argv.length; j++) {
 
 for (var i = 0; i < process.argv.length; i++) {
 
-
     if (!isNaN(param[i])) {
         query = query + 'and year=?';
     }
@@ -139,7 +138,7 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
 
         var progress = '';
         var elMax;
-        var kolMed = 0;
+        var scaleMedals = 0;
         var maxProgress = 200;
 
         if (alg == 1) {
@@ -153,29 +152,31 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
 
         elMax = numMedal[0];
         for (var i = 0; i <= arrParam.length - 1; i++) {
-            if (numMedal[i] > 0) {
-                for (var j = 0; j < numMedal[i] * maxProgress / elMax; j++) {
-                    progress = progress + '█';
-                    kolMed = numMedal[i] * maxProgress / elMax;
+                if (elMax < numMedal[i]) {
+                    elMax = numMedal[i];
                 }
-            }
+        }
 
-            if (elMax < numMedal[i]) {
-                elMax = numMedal[i];
-            }
+        for (var i = 0; i <= arrParam.length - 1; i++) {
+            if (numMedal[i] > 0) {
+                for (var j = 0; j < numMedal[i]* maxProgress /elMax; j++) {
+                     progress = progress + '█';
+                }
 
-            //numMedal[i] = Math.round(kolMed);
-            numMedal[i] = (progress);
+            }
+            scaleMedals = numMedal[i]* maxProgress /elMax;
+            scaleMedals =  Math.round(scaleMedals);
+            numMedal[i] = (progress)+'|'+scaleMedals;
+            scaleMedals = 0;
             progress = '';
 
-            kolMed = 0;
-
-            //console.log(elMax);
-            //console.log(' ' + arrSeason[i] + '    ' + arrParam[i] + '  ' + numMedal[i]);
+            // for debug
+            /*console.log(elMax);
+            console.log(' ' + arrSeason[i] + '    ' + arrParam[i] + '  ' + numMedal[i]);*/
 
             // для средней суммы всех команд, если больше, чем 200 медалей - пока закоментировал, раскоментировать позже
             /*for (var l = 0; l <= numMedal.length; l++) {
-                if (numMedal[l] < 200) {
+                if (numMedal[l] < 1) {
                     var id_val = numMedal[l];
                 }
                 var position = numMedal.indexOf(id_val);
