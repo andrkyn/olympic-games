@@ -176,7 +176,7 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
 
             // для средней суммы всех команд, если больше, чем 200 медалей - пока закоментировал, раскоментировать позже
             /*for (var l = 0; l <= numMedal.length; l++) {
-                if (numMedal[l] < 1) {
+                if (numMedal[l] < maxProgress) {
                     var id_val = numMedal[l];
                 }
                 var position = numMedal.indexOf(id_val);
