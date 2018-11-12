@@ -78,7 +78,6 @@ function test(arg1, arg2, arg3, callback) {
                         val2 = row.noc_name;
                         val3 = row.year;
                         val4 = row.season;
-
                         if (val4 == 1) {
                             val4 = "Winter";
                         } else {
@@ -92,10 +91,7 @@ function test(arg1, arg2, arg3, callback) {
                     });
                 } else {
                     for (var i = 0; i < process.argv.length - 1; i++) {
-                        //console.log(i);
-                        if (param[i] == 'Winter' || param[i] == 'Summer') {
-                            param[i] = val4;
-                        }
+                        param[i] = process.argv[i + 2];
                     }
                     console.log('\x1b[35m', 'error: ' + '\x1b[37m' + 'there is no request' +
                         '\x1b[33m', param + '\x1b[37m', 'in table');
