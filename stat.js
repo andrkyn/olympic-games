@@ -148,7 +148,7 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
         var progress = '';
         var elMax;
         var scaleMedals = 0;
-        var maxScale = 20;
+        var maxScale = 200;
 
         if (alg == 1) {
             console.log('------------ Medal--------------');
