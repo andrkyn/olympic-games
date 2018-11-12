@@ -17,8 +17,6 @@ var strParam2;
 var fndParam = 0;
 var endCycle = 0;
 var alg = 0;
-var seson2=0;
-var val1, val2, val3, val4;
 
 for (var j = 0; j < process.argv.length; j++) {
     if (param[j] == 3 && isNaN(param[j])) {
@@ -70,10 +68,13 @@ function test(arg1, arg2, arg3, callback) {
             [arg1, arg2, arg3], function (err, rows) {
                 if (!err) {
                     //console.log(rows.length);
+                    if (rows.length <= 0) {
+                        console.log('\033[33m', 'warning: ' + '\x1b[37m' + 'no such request in table');
+                    }
                     rows.forEach(function (row) {
                         //console.log(row.game_id);
                         numCol++;
-                        //var val1, val2, val3, val4;
+                        var val1, val2, val3, val4;
                         val1 = row.medal;
                         val2 = row.noc_name;
                         val3 = row.year;
@@ -83,13 +84,13 @@ function test(arg1, arg2, arg3, callback) {
                         } else {
                             val4 = "Summer";
                         }
-
                         if (rows.length == numCol) {
                             endCycle = 1;
                         }
                         callback(val1, val2, val3, val4);
                     });
                 } else {
+                    console.log(err.message);
                     for (var i = 0; i < process.argv.length - 1; i++) {
                         param[i] = process.argv[i + 2];
                     }
