@@ -14,7 +14,7 @@ npm install
 ## Start importcsv.js
 
 ```bash - import athlete_events.csv to olympic_history.db
-nodemon importcsv.js
+node importcsv.js
 ```
 
 ## Start stat.js with parameters
