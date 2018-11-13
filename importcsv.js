@@ -8,7 +8,7 @@ var csvFilePath='./csv/athlete_events.csv';
 csv()
     .fromFile(csvFilePath)
     .then((json)=>{
-        //console.log(json);
+        console.log('Number of record for analyzing:  '+json.length);
 
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('olympic_history.db');
@@ -18,6 +18,7 @@ var db = new sqlite3.Database('olympic_history.db');
         var colStr = 0;
         var colSport = 0;
         var colColumn = 0;
+        var recordCount =0;
         var strNoc2;
         var strGames2;
         var strSport2;
@@ -28,14 +29,17 @@ var db = new sqlite3.Database('olympic_history.db');
         var fndEvents = 0;
         var lineGame=0;
         var strCity2;
+        var excludeGames = '1906 Summer'; // example: '1920 Summer' or '2014 Winter',
+                                          // if the quote is empty, the game exclusion is canceled
         var arrGames =[], arrCity =[],arrRez = [], arrSeason =[],
             arrPr =[], arrYear = [], arrSport = [], arrEvent =[];
 
             // data array creation
             json.forEach(function (items) {
-
+                recordCount++;
                     //write json data tables to an array
                 var strName = items.Name;
+                var strGames = items.Games;
                 var intSex = items.Sex,
                     intAge = items.Age,
                     strParams,
@@ -60,16 +64,18 @@ var db = new sqlite3.Database('olympic_history.db');
                     var strTeam = strTeam.replace(/[-0-9^]/g, "");
                     var pos = arr.indexOf(strNoc) == -1;
 
+                if(strGames !== excludeGames) {
+
                     if (strNoc !== strNoc2) {
-                            if (pos == true) {
-                                    colStr = colStr + 1;
-                                    arr.push(strNoc);
-                                    arr2.push(strTeam);
-                            }
+                        if (pos == true) {
+                            colStr = colStr + 1;
+                            arr.push(strNoc);
+                            arr2.push(strTeam);
+                        }
                     }
 
                     function foundIndex(element) {
-                            return element == strNoc;
+                        return element == strNoc;
                     }
 
                     var fnd = arr.findIndex(foundIndex);
@@ -77,9 +83,10 @@ var db = new sqlite3.Database('olympic_history.db');
                     team_id = fnd;
                     strNoc2 = strNoc;
                     colColumn++;
+                }
 
                  ////////// add into Game data base  ////////
-                var strGames = items.Games;
+                //var strGames = items.Games;
                 var strCity = items.City;
                 var year = items.Year;
                 var season = items.Season;
@@ -101,29 +108,30 @@ var db = new sqlite3.Database('olympic_history.db');
                 medal = medal.replace(/Bronze/g, "3");
 
                 // for tables games
-                if (sport !== strSport2) {
+                if (sport !== strSport2 && strGames !== excludeGames) {
                     if (posSport == true) {
                         colSport++;
                         arrSport.push(sport);
                     }
                 }
                 strSport2 = sport;
-                fndSport = arrSport.findIndex(indSport);
+                if (strGames !== excludeGames)
+                    fndSport = arrSport.findIndex(indSport);
                 function indSport(element) {
                     return element == sport;
                 }// end for tables games
 
-                if (posGames == true) {
+                if (posGames == true && strGames !== excludeGames) {
                     lineGame++;
                     arrGames.push(strGames);
                     arrCity.push(strCity);
                     arrYear.push(year);
                     arrSeason.push(season);
                     arrEvent.push(event);
-
                 }
 
-                fndGame = arrGames.findIndex(indCity);
+                if (strGames !== excludeGames)
+                    fndGame = arrGames.findIndex(indCity);
                 function indCity(element) {
                     return element == strGames;
                 }
@@ -151,11 +159,13 @@ var db = new sqlite3.Database('olympic_history.db');
                     var athletes = db.prepare('INSERT OR REPLACE INTO athletes('
                         + 'id, full_name, sex, age, params, team_id)'
                         + 'VALUES (?,?,?,?,?,?)');
-                    athletes.run(colColumn, strName, intSex, intAge, strParams, team_id);
+                    if(strGames !== excludeGames) {
+                        athletes.run(colColumn, strName, intSex, intAge, strParams, team_id);
+                    }
                     athletes.finalize();
 
                     // to write data to table "Games"
-                    if (colColumn == json.length) {
+                    if (recordCount == json.length) {
                         var games = db.prepare('INSERT OR REPLACE INTO games('
                             + 'id, year, season, city)'
                             + 'VALUES (?,?,?,?)');
@@ -178,7 +188,7 @@ var db = new sqlite3.Database('olympic_history.db');
                             sports.run(j, arrSport[j]);
                         }
                         sports.finalize();
-                        console.log('Add to teams table: ' + colSport );
+                        console.log('Add to sports table: ' + colSport );
 
                         // to write data to table "Teams"
                         var team = db.prepare('INSERT OR REPLACE INTO teams('
@@ -195,14 +205,16 @@ var db = new sqlite3.Database('olympic_history.db');
                     var results = db.prepare('INSERT OR REPLACE INTO results('
                         + 'id, athlete_id, game_id, sport_id, event_id, medal)'
                         + 'VALUES (?,?,?,?,?,?)');
-                    results.run(colColumn, athlete_id, fndGame, fndSport, 'null', medal);
+                    if(strGames !== excludeGames) {
+                        results.run(colColumn, athlete_id, fndGame, fndSport, 'null', medal);
+                    }
                     results.finalize();
 
                     db.run("commit");
                 });
 
                 // reset array and object at end cycle
-                if (colColumn == json.length) {
+                if (recordCount == json.length) {
                     arr.splice(0, arr.length);
                     arr2.splice(0, arr2.length);
                     json.splice(0, json.length);
@@ -211,8 +223,7 @@ var db = new sqlite3.Database('olympic_history.db');
 
             });
 
-          console.log(' number of lines: ' + colColumn + '\n number of NOC: ' +
-              colStr + '\n array Games: ' + arrGames + '\n number of Game: ' + lineGame +
+          console.log('number of NOC: ' + colStr + '\n array Games: ' + arrGames + '\n number of Game: ' + lineGame +
               '\n arrRez: ' + arrRez);
 
         db.close();
