@@ -148,7 +148,8 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
         var progress = '';
         var elMax;
         var scaleMedals = 0;
-        var maxScale = 200;
+        var maxScale = 200; // if the value is greater than 1 then we enable scaling, default 200
+        var expression;
 
         if (alg == 1) {
             console.log('------------ Medal--------------');
@@ -165,15 +166,21 @@ test(param[0], param[1], param[2], function (a, b, c, d) {
                     elMax = numMedal[i];
                 }
         }
+        // added to select scaling
+        if (maxScale == 1) {
+            expression = 1;
+        } else {
+            expression =maxScale /elMax;
+        }
 
         for (var i = 0; i <= arrParam.length - 1; i++) {
             if (numMedal[i] > 0) {
-                for (var j = 0; j < numMedal[i]* maxScale /elMax; j++) {
+                for (var j = 0; j < numMedal[i]* expression; j++) {
                      progress = progress + '█';
                 }
 
             }
-            scaleMedals = numMedal[i]* maxScale /elMax;
+            scaleMedals = numMedal[i]* expression;
             scaleMedals =  Math.round(scaleMedals);
             numMedal[i] = (progress)+'|'+scaleMedals;
             scaleMedals = 0;
